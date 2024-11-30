@@ -1,0 +1,38 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+
+    maven {
+        url = uri('https://repo.papermc.io/repository/maven-public/')
+    }
+
+    maven {
+        url = uri('https://hub.spigotmc.org/nexus/content/groups/public/')
+    }
+}
+
+group = 'dev.geco.gmusic'
+version = '1.0.0'
+java.sourceCompatibility = JavaVersion.VERSION_17
+description = 'dist'
+
+
+dependencies {
+    implementation "io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT"
+    implementation "org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+}
+
