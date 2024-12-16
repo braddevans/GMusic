@@ -1,5 +1,12 @@
+import org.apache.tools.ant.filters.*
+
 plugins {
     id 'java-library'
+}
+
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
 }
 
 repositories {
@@ -17,15 +24,22 @@ repositories {
     }
 }
 
-group = 'dev.geco.gmusic'
-version = '1.0.0'
+group = "dev.geco.gmusic"
+version = "1.0.1-dev"
 java.sourceCompatibility = JavaVersion.VERSION_17
-description = 'dist'
+
+String pluginName = "GMusic"
+String pluginGroup = group.toString()
+String pluginVersion = version.toString()
+String pluginDescription = "dist"
 
 
 dependencies {
-    implementation "io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT"
-    implementation "org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT"
+    implementation("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
+    implementation("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT")
+    extraLibs("net.kyori:adventure-api:4.17.0")
+
+    configurations.implementation.extendsFrom(configurations.extraLibs)
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -34,5 +48,36 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
+}
+
+sourceSets {
+    main {
+        java {
+            resources {
+                srcDirs = ["src/resources", "src/resource_pack"]
+                include '**/**'
+            }
+        }
+    }
+}
+
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter(ReplaceTokens, tokens: [
+                '${pluginName}': pluginName,
+                '${pluginGroup}': pluginGroup,
+                '${pluginVersion}': pluginVersion,
+                '${pluginDescription}': pluginDescription
+        ])
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+jar {
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/**/*"
+    }
 }
 

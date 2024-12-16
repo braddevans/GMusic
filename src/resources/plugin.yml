@@ -1,39 +1,33 @@
-name: ${project.parent.name}
-version: ${project.parent.version}
-description: ${project.description}
+name: GMusic
+version: 1.0.1-dev
+description: "Noteblock Music Plugin"
 authors: [Gecolay]
 website: https://www.spigotmc.org/resources/84004
-main: ${project.parent.groupId}.${project.parent.artifactId}Main
+main: dev.geco.gmusic.GMusicMain
 api-version: 1.17
 folia-supported: true
 
 commands:
 
   gmusic:
-
     usage: /<command> play|playing|random|stop|pause|resume|skip|toggle
     aliases: [music, gsong, song]
     description: Music command
     permission: GMusic.Music
 
   agmusic:
-
     usage: /<command>
     aliases: [amusic]
     description: AMusic command
     permission: GMusic.AMusic
 
   gmusicreload:
-
     usage: /<command>
     aliases: [gmusicrl]
     description: Plugin reload command
     permission: GMusic.Reload
 
-
-
 permissions:
-
   GMusic.*:
     default: op
     description: GMusic | Permissions

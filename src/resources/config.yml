@@ -11,7 +11,7 @@ Lang:
 Options:
 
   # Plugin sends update notifications
-  check-for-update: true
+  check-for-update: false
 
   # List of worlds where all features are disabled
   WorldBlacklist: []

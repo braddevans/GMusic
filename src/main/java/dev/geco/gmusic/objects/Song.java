@@ -12,7 +12,7 @@ public class Song {
 
 	private final String id;
 
-	private final String title;
+	private String title;
 
 	private final String originalAuthor;
 
@@ -149,4 +149,7 @@ public class Song {
 
 	public long getLength() { return length; }
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }

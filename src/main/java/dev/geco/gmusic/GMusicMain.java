@@ -89,12 +89,12 @@ public class GMusicMain extends JavaPlugin {
         if(getCManager().R_ACTIVE) getRadioManager().playRadio();
     }
 
-    private void linkBStats() {
-
-        BStatsLink bstats = new BStatsLink(getInstance(), 4925);
-
-        bstats.addCustomChart(new BStatsLink.SimplePie("plugin_language", () -> getCManager().L_LANG));
-    }
+//    private void linkBStats() {
+//
+//        BStatsLink bstats = new BStatsLink(getInstance(), 4925);
+//
+//        bstats.addCustomChart(new BStatsLink.SimplePie("plugin_language", () -> getCManager().L_LANG));
+//    }
 
     public void onLoad() {
 
@@ -124,18 +124,19 @@ public class GMusicMain extends JavaPlugin {
 
     public void onEnable() {
 
-        if(!versionCheck()) return;
+        // if(!versionCheck()) return;
 
         loadSettings(Bukkit.getConsoleSender());
 
         setupCommands();
         setupEvents();
-        linkBStats();
+        // linkBStats();
 
         getMManager().sendMessage(Bukkit.getConsoleSender(), "Plugin.plugin-enabled");
 
         loadPluginDependencies(Bukkit.getConsoleSender());
-        GPM.getUManager().checkForUpdates();
+        // not needed on a fork
+        // GPM.getUManager().checkForUpdates();
     }
 
     public void onDisable() {

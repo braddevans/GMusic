@@ -40,6 +40,9 @@ public class SongManager {
         File midiDir = new File(GPM.getDataFolder(), "midi");
         if(!midiDir.exists()) midiDir.mkdir();
 
+        File dataDir = new File(GPM.getDataFolder(), "data");
+        if(!dataDir.exists()) dataDir.mkdir();
+
         Arrays.asList(Objects.requireNonNull(nbsDir.listFiles())).parallelStream().forEach(file -> {
 
             if(!new File(songsDir.getAbsolutePath() + "/" + file.getName().replaceFirst("[.][^.]+$", "") + ".gnbs").exists()) GPM.getNBSManager().convertFile(file);
@@ -66,6 +69,10 @@ public class SongManager {
 
             Song song = new Song(file);
 
+            if (song.getTitle() == null){
+                song.setTitle(file.getName().replaceFirst("[.][^.]+$", ""));
+            };
+
             if(song.getNoteAmount() == 0) return null;
 
             ArrayList<Component> description = new ArrayList<>();
@@ -80,8 +87,10 @@ public class SongManager {
             itemMeta.addItemFlags(ItemFlag.values());
             itemStack.setItemMeta(itemMeta);
 
+            // this.GPM.getLogger().info("Loaded song: " + song.getTitle());
+
             return song;
-        }).collect(Collectors.toList());
+        }).filter(Objects::nonNull).collect(Collectors.toList());
 
         songs.sort(Comparator.comparing(Song::getTitle, String.CASE_INSENSITIVE_ORDER));
     }
